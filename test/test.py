@@ -1,4 +1,4 @@
-from Animepahe.animepahe import AnimepaheAPI
+from AnimepaheAPI.animepahe import AnimepaheAPI
 import json
 
 animepahe = AnimepaheAPI()
