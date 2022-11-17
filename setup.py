@@ -19,7 +19,7 @@ setup(
     version=version,
     long_description=readme,
     url='https://github.com/xenmods/AnimepaheAPI',
-    packages=['AnimepaheAPI'],
+    packages=['AnimepaheAPI/'],
     license='GNU General Public License v3.0',
     classifiers=[
         'Development Status :: 3 - Alpha',
