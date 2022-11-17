@@ -15,7 +15,7 @@ pip install git+https://github.com/xenmods/AnimepaheAPI
 #### Search for anime by keywords
 
 ```python
-from Animepahe.animepahe import AnimepaheAPI
+from AnimepaheAPI.animepahe import AnimepaheAPI
 animepahe = AnimepaheAPI()
 data = animepahe.search('one piece')
 print(data)
@@ -133,7 +133,7 @@ print(data)
 #### We can use that data to get a release!
 
 ```python
-from Animepahe.animepahe import AnimepaheAPI
+from AnimepaheAPI.animepahe import AnimepaheAPI
 animepahe = AnimepaheAPI()
 release = animepahe.get_release('976aa970-111b-6867-e060-7f06e6c8e4c6', episode=69) # we got the session from animepahe.search()
 print(release)
@@ -160,7 +160,7 @@ print(release)
 #### Now using the session from the release, we can get the download link
 
 ```python
-from Animepahe.animepahe import AnimepaheAPI
+from AnimepaheAPI.animepahe import AnimepaheAPI
 animepahe = AnimepaheAPI()
 download = animepahe.get_download_links('26cae04bdb5238679e42824b45ec3f5fb12b1718b9cabeef7b69fbc5933b588d') # we got the session from animepahe.release()
 print(download)
