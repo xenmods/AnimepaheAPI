@@ -83,7 +83,6 @@ class AnimepaheAPI():
             resp = requests.get(kwik, headers=headers)
             soup = BeautifulSoup(resp.content, 'html.parser')
             script = soup.find_all('script')[6].get_text().split('Plyr')[1].split('.split')[0].split('|')
-            print(script)
             finalUrl = f"https://{script[-2]}-{script[-3]}.{script[-4]}.{script[-5]}.{script[-6]}/hls/{script[-8]}/{script[-9]}/{script[-10]}/owo.m3u8"
             directUrls.append(finalUrl)
             
