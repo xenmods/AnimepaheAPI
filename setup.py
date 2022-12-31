@@ -1,10 +1,10 @@
 import re
 from setuptools import setup
 
-version = '1.0.1'
+version = '2.0'
 
 
-requirements = ['requests']
+requirements = ['requests', 'beautifulsoup4']
     
 
 
