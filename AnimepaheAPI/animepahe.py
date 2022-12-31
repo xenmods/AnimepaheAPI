@@ -1,5 +1,6 @@
 import requests
 from . import utils
+from bs4 import BeautifulSoup
 
 class AnimepaheAPI():
 
@@ -10,7 +11,7 @@ class AnimepaheAPI():
 
 
     def search(self, args: str) -> dict:
-        if args == '':
+        if not args:
             raise ValueError('No arguments given')
         url = f"{self.API_URL}search&q={args.replace(' ', '&')}"
         resp = self.session.get(url)
@@ -21,7 +22,7 @@ class AnimepaheAPI():
         return result
 
     def get_release(self, releaseid: str, episode: int = 1) -> dict:
-        if releaseid == '':
+        if not releaseid:
             raise ValueError('No releaseid given!')
         url = f"{self.API_URL}release&id={releaseid}&sort=episode_asc"
         firstcall = self.session.get(url)
@@ -58,7 +59,7 @@ class AnimepaheAPI():
             
 
     def get_download_links(self, session: str) -> dict:
-        if session == '':
+        if not session:
             raise ValueError('Invalid session id!')
         url = f"{self.API_URL}links&id={session}&p=kwik"
         resp =  self.session.get(url)
@@ -75,6 +76,16 @@ class AnimepaheAPI():
             size = file.get(quality).get('filesize')
             filesizes.append(utils.convert_size(size))
             audios.append('japanese' if file.get(quality).get('audio') == 'jpn' else 'english')
-            kwiklinks.append(file.get(quality).get('kwik_pahewin'))
-        results = [{'quality': qualities[i], 'size': filesizes[i], 'audio': audios[i], 'link': kwiklinks[i]} for i in range(len(qualities))]
-        return {'success': True, 'results': results}
+            kwiklinks.append(file.get(quality).get('kwik'))
+        directUrls = []
+        for kwik in kwiklinks:
+            headers = {'Referer':'https://animepahe.com/'}
+            resp = requests.get(kwik, headers=headers)
+            soup = BeautifulSoup(resp.content, 'html.parser')
+            script = soup.find_all('script')[6].get_text().split('Plyr')[1].split('.split')[0].split('|')
+            print(script)
+            finalUrl = f"https://{script[-2]}-{script[-3]}.{script[-4]}.{script[-5]}.{script[-6]}/hls/{script[-8]}/{script[-9]}/{script[-10]}/owo.m3u8"
+            directUrls.append(finalUrl)
+            
+        results = [{'quality': qualities[i], 'size': filesizes[i], 'audio': audios[i], 'url': directUrls[i]} for i in range(len(qualities))]
+        return {'success': True, "headers": {"Referer":"https://kwik.cx/"}, 'results': results}
