@@ -1,7 +1,7 @@
 import re
 from setuptools import setup
 
-version = '2.0'
+version = '2.0.1'
 
 
 requirements = ['requests', 'beautifulsoup4']
